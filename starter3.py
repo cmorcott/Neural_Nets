@@ -127,7 +127,7 @@ class CustomMNISTDataSet(torch.utils.data.Dataset):
 class FeedForward(nn.Module):
   def __init__(self):
     super(FeedForward, self).__init__()
-    self.linear1 = nn.Linear(8, 32)
+    self.linear1 = nn.Linear(3, 32)
     self.relu1 = nn.LeakyReLU()
     self.linear2 = nn.Linear(32, 16)
     self.relu2 = nn.LeakyReLU()
@@ -141,7 +141,7 @@ class FeedForward(nn.Module):
     x = self.linear_out(x)
     return x
   
-def train(dataloader, model, loss_func, optimizer, lamb):
+def train(dataloader, model, loss_func, optimizer, lamb, ff):
   model.train()
   train_loss = []
 
@@ -225,7 +225,7 @@ def classify_insurability():
     test_loss = []
     for t in range(epochs):
         print(f"Epoch {t+1}\n------------------------------- \n")
-        losses = train(train_loader, ff, loss_func, optimizer, 0.01)
+        losses = train(train_loader, ff, loss_func, optimizer, 0.01, ff)
         train_loss.append(losses)
         test_loss.append(test(test_loader, ff, loss_func))
 
