@@ -120,6 +120,27 @@ class CustomMNISTDataSet(torch.utils.data.Dataset):
         return data_tensor, label_tensor
 
 def train(dataloader, model, loss_func, optimizer, lamb):
+
+
+#class for the ff nn
+class FeedForward(nn.Module):
+  def __init__(self):
+    super(FeedForward, self).__init__()
+    self.linear1 = nn.Linear(3, 32)
+    self.relu1 = nn.LeakyReLU()
+    self.linear2 = nn.Linear(32, 16)
+    self.relu2 = nn.LeakyReLU()
+    self.linear_out = nn.Linear(16, 1)
+
+  def forward(self, x):
+    x = self.linear1(x)
+    x = self.relu1(x)
+    x = self.linear2(x)
+    x = self.relu2(x)
+    x = self.linear_out(x)
+    return x
+  
+def train(dataloader, model, loss_func, optimizer, lamb, ff):
   model.train()
   train_loss = []
 
